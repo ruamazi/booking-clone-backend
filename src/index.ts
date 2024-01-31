@@ -5,6 +5,7 @@ import { connectDB } from "./connectDB";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 import myHotelRoutes from "./routes/myHotels";
+import hotelRoutes from "./routes/hotels";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 dotenv.config();
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/my-hotels", myHotelRoutes);
+app.use("/api/hotels", hotelRoutes);
 
 app.listen(PORT, () => {
   connectDB();
