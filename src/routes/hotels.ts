@@ -56,6 +56,16 @@ router.get("/search", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/", async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find().sort("-lastUpdated");
+    res.json(hotels);
+  } catch (err) {
+    console.log("error", err);
+    res.status(500).json({ error: "Error fetching hotels" });
+  }
+});
+
 const constructSearchQuery = (queryParams: any) => {
   let constructedQuery: any = {};
   if (queryParams.destination) {
@@ -137,7 +147,7 @@ router.post(
       }
       const totalCost = hotel.pricePerNight * numberOfNights;
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: totalCost,
+        amount: totalCost * 100,
         currency: "usd",
         metadata: {
           hotelId,
